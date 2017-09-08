@@ -1,12 +1,9 @@
-//testing commit, can you see this?
-
-
 function bottlePurchase(purchaseAmount) {
   let totalBottles = purchaseAmount/2;
   console.log("total bottles ", totalBottles);
 
   let redeemableBottles = function (extraBottles, extraEmpties, extraCaps) {
-    if (extraBottles < 3 && extraEmpties < 2 && extraCaps < 4)
+    if ((extraBottles < 3) && (extraEmpties < 2) && (extraCaps < 4))
     {
       console.log("we are done now");
       return totalBottles;
@@ -33,7 +30,7 @@ function bottlePurchase(purchaseAmount) {
     console.log("total bottles: ", totalBottles);
     console.log("extra empties: ", extraEmpties, " extra caps: ", extraCaps);
 
-    redeemableBottles(totalThisRound, extraEmpties, extraCaps); //calls itself until done
+    return redeemableBottles(totalThisRound, extraEmpties, extraCaps); //calls itself until done
   }
   console.log("calling the recursive function...");
   redeemableBottles(totalBottles, 0, 0); //starts the chain
