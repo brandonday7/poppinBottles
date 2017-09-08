@@ -1,3 +1,6 @@
+//testing commit, can you see this?
+
+
 function bottlePurchase(purchaseAmount) {
   let totalBottles = purchaseAmount/2;
   console.log("total bottles ", totalBottles);
