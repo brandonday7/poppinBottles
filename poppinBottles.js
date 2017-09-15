@@ -1,5 +1,8 @@
 function bottlePurchase(purchaseAmount) {
-  let totalBottles = purchaseAmount/2;
+  let totals = {bottles: totalBottles = purchaseAmount/2,
+    emptyCount: 0,
+    capCount: 0,
+  };
 
   let redeemableBottles = function (extraBottles, extraEmpties, extraCaps) {
     let empties = extraBottles + extraEmpties;
@@ -7,7 +10,9 @@ function bottlePurchase(purchaseAmount) {
 
     if ((empties < 2) && (caps < 4))
     {
-      return totalBottles;
+      totals.emptySpare = empties;
+      totals.capSpare = caps;
+      return totals;
     }
 
     let totalThisRound = 0;
@@ -15,21 +20,32 @@ function bottlePurchase(purchaseAmount) {
     extraEmpties = empties % 2;
     empties = Math.floor(empties/2);
     totalThisRound += empties;
+    totals.emptyCount += empties;
     extraCaps = caps % 4;
     caps = Math.floor(caps/4)
     totalThisRound += caps;
+    totals.capCount += caps;
 
-    totalBottles += totalThisRound;
+    totals.bottles += totalThisRound;
     redeemableBottles(totalThisRound, extraEmpties, extraCaps); //calls itself until done
     return;
   }
 
-  redeemableBottles(totalBottles, 0, 0); //starts the chain
+  redeemableBottles(totals.bottles, 0, 0); //starts the chain
 
-  return totalBottles;
+  return totals;
 }
 
 let args = process.argv;
+totals = bottlePurchase(args[2]);
+
+console.log(`TOTAL BOTTLES: ${totals.bottles}
+  REMAINING BOTTLES: ${totals.emptySpare}
+  REMAINING CAPS: ${totals.capSpare}
+  TOTAL EARNED:
+    BOTTLES: ${totals.emptyCount}
+    CAPS: ${totals.capCount}`);
 
 
-console.log(`With an investment of $${args[2]}, you will receive ${bottlePurchase(args[2])} bottles!`);
+
+
