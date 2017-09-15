@@ -1,41 +1,35 @@
 function bottlePurchase(purchaseAmount) {
   let totalBottles = purchaseAmount/2;
-  console.log("total bottles ", totalBottles);
 
   let redeemableBottles = function (extraBottles, extraEmpties, extraCaps) {
-    if ((extraBottles < 3) && (extraEmpties < 2) && (extraCaps < 4))
+    let empties = extraBottles + extraEmpties;
+    let caps = extraBottles + extraCaps;
+
+    if ((empties < 2) && (caps < 4))
     {
-      console.log("we are done now");
       return totalBottles;
     }
 
-    let empties = extraBottles + extraEmpties;
-    let caps = extraBottles + extraCaps;
-    console.log("empties: ", empties, " caps: ", caps);
-
     let totalThisRound = 0;
 
-    while (empties > 1 || caps > 3)
-    {
-      extraEmpties = empties % 2;
-      empties = Math.floor(empties/2);
-      totalThisRound += empties;
-      extraCaps = caps % 4;
-      caps = Math.floor(caps/4)
-      totalThisRound += caps;
-      console.log("total this round: ", totalThisRound);
-    }
+    extraEmpties = empties % 2;
+    empties = Math.floor(empties/2);
+    totalThisRound += empties;
+    extraCaps = caps % 4;
+    caps = Math.floor(caps/4)
+    totalThisRound += caps;
 
     totalBottles += totalThisRound;
-    console.log("total bottles: ", totalBottles);
-    console.log("extra empties: ", extraEmpties, " extra caps: ", extraCaps);
-
-    return redeemableBottles(totalThisRound, extraEmpties, extraCaps); //calls itself until done
+    redeemableBottles(totalThisRound, extraEmpties, extraCaps); //calls itself until done
+    return;
   }
-  console.log("calling the recursive function...");
+
   redeemableBottles(totalBottles, 0, 0); //starts the chain
+
+  return totalBottles;
 }
 
-let myBottles = bottlePurchase(6);
+let args = process.argv;
 
-console.log("The program calculated ", bottlePurchase(6), " bottles");
+
+console.log(`With an investment of $${args[2]}, you will receive ${bottlePurchase(args[2])} bottles!`);
